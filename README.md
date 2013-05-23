@@ -8,15 +8,18 @@ This depends on phery.js library https://github.com/pocesar/phery
 ### Usage
 
 ```js
-YourController = function($scope, $pheryResource, $timeout){
-  $scope.far = $pheryResource('your-remote-function');
+app = angular.module('App', []);
+
+app.controller('YourController', function($scope, $pheryResource, $timeout){
+  far = $pheryResource('your-remote-function');
   
-  $scope.far['delete']({'id':1});
-  $scope.far.get({'id':1});
-  $scope.far.post($scope.model);
-  $scope.far.put($scope.model);
+  /* If you want to reach the JSON callback, you need to return PheryResponse::factory()->json($your_data) */
+  far['delete']({'id':1}, function(){ /*JSON*/ }, function(){ /*fail*/ }); //calls your-remote-function with DELETE method and id:1
+  far.get({'id':1}, function(){ /*JSON*/ }, function(){ /*fail*/ }); // calls your-remote-function with GET method and id:1
+  far.post($scope.model, function(){ /*JSON*/ }, function(){ /*fail*/ }); // calls your-remote-function with POST method and post the data from the model
+  far.put($scope.model, function(){ /*JSON*/ }, function(){ /*fail*/ }); // calls your-remote-function with PUT method and put the data from the model
   
-  $scope.far.subscribe({
+  far.subscribe({ // subscribe, reach this by returning a PheryResponse::factory()->publish('load') or 'done' for example
     'load': function(data){
       $scope.model = data;
     },
@@ -25,17 +28,17 @@ YourController = function($scope, $pheryResource, $timeout){
     }
   });
   
-  phery.broadcast('done');
-  $scope.far.publish('done');
+  phery.broadcast('done'); // trigger the subscribed event everythere
+  far.publish('done'); // trigger the subscribed event only on this element
   
-  $scope.far.remote([1,3,4]);
+  far.remote([1,3,4]); // call the remote your-remote-function with any king of arguments directly
   
-  $scope.far.proxy('div.load');
+  far.proxy('div.load'); // proxy this detached element to another DOM element
   
-  $scope.far.element.on('phery:retry', function(trycount){
+  far.element.on('phery:retry', function(trycount){ // all phery events are available on the element member
     $timeout(function(){
       $scope.message = 'Retrying ' + trycount + '...';
     });
   });
-};
+});
 ```
