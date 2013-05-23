@@ -28,6 +28,8 @@ YourController = function($scope, $pheryResource, $timeout){
   phery.broadcast('done');
   $scope.far.publish('done');
   
-  $scope.far.remote('random function', [1,3,4]);
+  $scope.far.remote([1,3,4]);
+  
+  $scope.far.proxy('div.load');
 };
 ```
