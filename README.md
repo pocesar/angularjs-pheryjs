@@ -16,7 +16,7 @@ YourController = function($scope, $pheryResource, $timeout){
   $scope.far.post($scope.model);
   $scope.far.put($scope.model);
   
-  $scope.remote.subscribe({
+  $scope.far.subscribe({
     'load': function(data){
       $scope.model = data;
     },
@@ -24,5 +24,10 @@ YourController = function($scope, $pheryResource, $timeout){
       $scope.modal.close();
     }
   });
+  
+  phery.broadcast('done');
+  $scope.far.publish('done');
+  
+  $scope.far.remote('random function', [1,3,4]);
 };
 ```
