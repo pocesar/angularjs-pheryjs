@@ -1,5 +1,5 @@
 (function(){
-  angular.module('pheryResource', []).factory('$pheryResource', function() {
+  angular.module('pheryResource', []).factory('$pheryResource', function($timeout) {
     var phery_remote;
 
     phery_remote = function(remote, url) {
@@ -11,10 +11,14 @@
       this.remote.phery('data', 'method', 'GET');
       this.remote.on({
         'phery:json': function(event, data) {
-          return typeof cb === "function" ? cb(data) : void 0;
+          return $timeout(function() {
+            return typeof cb === "function" ? cb(data) : void 0;
+          });
         },
         'phery:fail': function(event, error) {
-          return typeof err === "function" ? err(error) : void 0;
+          return $timeout(function() {
+            return typeof err === "function" ? err(error) : void 0;
+          });
         }
       });
       return this.remote.phery('remote', data);
@@ -23,10 +27,14 @@
       this.remote.phery('data', 'method', 'POST');
       this.remote.on({
         'phery:json': function(event, data) {
-          return typeof cb === "function" ? cb(data) : void 0;
+          return $timeout(function() {
+            return typeof cb === "function" ? cb(data) : void 0;
+          });
         },
         'phery:fail': function(event, error) {
-          return typeof err === "function" ? err(error) : void 0;
+          return $timeout(function() {
+            return typeof err === "function" ? err(error) : void 0;
+          });
         }
       });
       return this.remote.phery('remote', data);
@@ -35,10 +43,14 @@
       this.remote.phery('data', 'method', 'PUT');
       this.remote.on({
         'phery:json': function(event, data) {
-          return typeof cb === "function" ? cb(data) : void 0;
+          return $timeout(function() {
+            return typeof cb === "function" ? cb(data) : void 0;
+          });
         },
         'phery:fail': function(event, error) {
-          return typeof err === "function" ? err(error) : void 0;
+          return $timeout(function() {
+            return typeof err === "function" ? err(error) : void 0;
+          });
         }
       });
       return this.remote.phery('remote', data);
@@ -47,10 +59,14 @@
       this.remote.phery('data', 'method', 'DELETE');
       this.remote.on({
         'phery:json': function(event, data) {
-          return typeof cb === "function" ? cb(data) : void 0;
+          return $timeout(function() {
+            return typeof cb === "function" ? cb(data) : void 0;
+          });
         },
         'phery:fail': function(event, error) {
-          return typeof err === "function" ? err(error) : void 0;
+          return $timeout(function() {
+            return typeof err === "function" ? err(error) : void 0;
+          });
         }
       });
       return this.remote.phery('remote', data);
