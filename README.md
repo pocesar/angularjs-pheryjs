@@ -31,5 +31,11 @@ YourController = function($scope, $pheryResource, $timeout){
   $scope.far.remote([1,3,4]);
   
   $scope.far.proxy('div.load');
+  
+  $scope.far.element.on('phery:retry', function(trycount){
+    $timeout(function(){
+      $scope.message = 'Retrying ' + trycount + '...';
+    });
+  });
 };
 ```
